@@ -1,5 +1,5 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { FormControl, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export interface FormErrors {
   type: string;

@@ -5,6 +5,7 @@ import { concatMap, map, Observable, switchMap, concatAll, filter } from 'rxjs';
 import { IApi } from '../interfaces/IApi.interface';
 import { DeliveryReturn } from '../models/delivery-return.model';
 import { Delivery } from '../models/delivery.model';
+import { transformStringInArray } from '../helpers/helpers';
 
 @Injectable({
   providedIn: 'root',
@@ -30,94 +31,6 @@ export class ApiService implements IApi<DeliveryReturn> {
         }
       })
     );
-  }
-
-  private getOnPagination(
-    page: number,
-    size: number,
-    data: any[],
-    total?: number
-  ) {
-    const firstItem = (page - 1) * size;
-    const lastItem = firstItem + size;
-
-    let itemsReturned: any;
-
-    itemsReturned = this.filterByPagination(data, firstItem, lastItem);
-    total = total ? total : data.length;
-
-    return {
-      page,
-      size,
-      nextPage: lastItem >= total ? null : ++page,
-      prevPage: firstItem <= 1 ? null : --page,
-      data: itemsReturned,
-      total,
-    };
-  }
-
-  private getOnPaginationAndFilters(
-    page: number,
-    size: number,
-    filters: string,
-    data: any
-  ) {
-    const queryArray = this.transformStringInArray(filters);
-    let dataReturned = this.filterByQueriesParams(queryArray, data);
-    return this.getOnPagination(page, size, dataReturned, dataReturned.length);
-  }
-
-  private filterByQueriesParams(
-    queryString: { attr: string; value: string }[],
-    deliveries: Delivery[]
-  ) {
-    let result = deliveries;
-    queryString.forEach((param) => {
-      result = this.filterByQueriesParamsRecursive(
-        param.attr,
-        param.value,
-        result
-      );
-    });
-    return result;
-  }
-
-  private filterByQueriesParamsRecursive(
-    paramAttr: string,
-    paramValue: any,
-    deliveries: Delivery[]
-  ) {
-    return deliveries.filter((item: any) => {
-      if (
-        !(typeof item[paramAttr.split('.')[0]] == 'object') &&
-        typeof paramAttr == 'string' &&
-        typeof paramValue == 'string'
-      ) {
-        return paramValue.toLowerCase() == item[paramAttr].toLowerCase();
-      } else if (typeof (item[paramAttr.split('.')[0]] == 'object')) {
-        if (
-          typeof item[paramAttr.split('.')[0]][paramAttr.split('.')[1]] ==
-          'string'
-        ) {
-          return (
-            item[paramAttr.split('.')[0]][
-              paramAttr.split('.')[1]
-            ].toLowerCase() == paramValue.toLowerCase()
-          );
-        } else {
-          return (
-            item[paramAttr.split('.')[0]][paramAttr.split('.')[1]] == paramValue
-          );
-        }
-      }
-      return item[paramAttr] == paramValue;
-    });
-  }
-
-  filterByPagination(items: any[], firstItem: number, lastItem: number) {
-    return items.filter((item, index: number) => {
-      return index >= firstItem && index < lastItem;
-    });
   }
 
   getDeliverySuccessful(page = 1, size = 10) {
@@ -259,13 +172,95 @@ export class ApiService implements IApi<DeliveryReturn> {
       );
   }
 
-  transformStringInArray(filters: string) {
-    return filters
-      .substring(1)
-      .split('&')
-      .map((param) => {
-        const [attr, value] = param.split('=');
-        return { attr, value };
-      });
+  private getOnPagination(
+    page: number,
+    size: number,
+    data: any[],
+    total?: number
+  ) {
+    const firstItem = (page - 1) * size;
+    const lastItem = firstItem + size;
+
+    let itemsReturned: any;
+
+    itemsReturned = this.filterByPagination(data, firstItem, lastItem);
+    total = total ? total : data.length;
+
+    return {
+      page,
+      size,
+      nextPage: lastItem >= total ? null : ++page,
+      prevPage: firstItem <= 1 ? null : --page,
+      data: itemsReturned,
+      total,
+    };
+  }
+
+  private getOnPaginationAndFilters(
+    page: number,
+    size: number,
+    filters: string,
+    data: any
+  ) {
+    const queryArray = transformStringInArray(filters);
+    let dataReturned = this.filterByQueriesParams(queryArray, data);
+    return this.getOnPagination(page, size, dataReturned, dataReturned.length);
+  }
+
+  private filterByQueriesParams(
+    queryString: { attr: string; value: string }[],
+    deliveries: Delivery[]
+  ) {
+    let result = deliveries;
+    queryString.forEach((param) => {
+      result = this.filterByQueriesParamsRecursive(
+        param.attr,
+        param.value,
+        result
+      );
+    });
+    return result;
+  }
+
+  private filterByQueriesParamsRecursive(
+    paramAttr: string,
+    paramValue: any,
+    deliveries: Delivery[]
+  ) {
+    return deliveries.filter((item: any) => {
+      if (
+        !(typeof item[paramAttr.split('.')[0]] == 'object') &&
+        typeof paramAttr == 'string' &&
+        typeof paramValue == 'string'
+      ) {
+        return paramValue.toLowerCase() == item[paramAttr].toLowerCase();
+      } else if (typeof (item[paramAttr.split('.')[0]] == 'object')) {
+        if (
+          typeof item[paramAttr.split('.')[0]][paramAttr.split('.')[1]] ==
+          'string'
+        ) {
+          return (
+            item[paramAttr.split('.')[0]][
+              paramAttr.split('.')[1]
+            ].toLowerCase() == paramValue.toLowerCase()
+          );
+        } else {
+          return (
+            item[paramAttr.split('.')[0]][paramAttr.split('.')[1]] == paramValue
+          );
+        }
+      }
+      return item[paramAttr] == paramValue;
+    });
+  }
+
+  private filterByPagination(
+    items: any[],
+    firstItem: number,
+    lastItem: number
+  ) {
+    return items.filter((item, index: number) => {
+      return index >= firstItem && index < lastItem;
+    });
   }
 }

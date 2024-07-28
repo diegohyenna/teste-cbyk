@@ -1,8 +1,8 @@
 import {
+  AfterContentChecked,
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -11,6 +11,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Filters } from 'src/app/models/filters.model';
 
 import { FormErrors } from '../form/input/input.component';
+import { LoadingTable, StateTableTypes, TableService } from './table.service';
 
 export interface FilterInputs {
   label: string;
@@ -28,15 +29,29 @@ export interface FilterInputs {
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent implements OnChanges {
+export class TableComponent implements AfterContentChecked {
   @Input({ required: true }) columns!: string[];
   @Input({ required: true }) tableColumns!: any[];
   @Input() filterInputs?: FilterInputs[];
-  @Input() isLoading = false;
-  @Input() tableData: any[] = [];
-  @Input() page = 1;
-  @Input() size = 10;
-  @Input() total = 0;
+
+  isLoading: LoadingTable = {
+    deliveries: false,
+    driversSuccessful: false,
+    driversUnsuccessful: false,
+    neighborhood: false,
+  };
+
+  tableData: any = {
+    deliveries: { data: [], page: 1, size: 10, total: 0 },
+    driversSuccessful: { data: [], page: 1, size: 10, total: 0 },
+    driversUnsuccessful: { data: [], page: 1, size: 10, total: 0 },
+    neighborhood: { data: [], page: 1, size: 10, total: 0 },
+  };
+
+  @Input({ required: true }) tableDataAttr!: StateTableTypes;
+  page = 1;
+  size = 10;
+  total = 0;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -54,32 +69,21 @@ export class TableComponent implements OnChanges {
   filtersQueries: Filters[] = [];
   filtersQueriesStringify = '';
 
-  ngOnChanges(changes: any): void {
-    console.log(changes);
-    this.tableData = changes?.tableData?.currentValue
-      ? changes?.tableData?.currentValue
-      : this.tableData;
-    this.total = changes?.total?.currentValue
-      ? changes?.total?.currentValue
-      : this.total;
-    console.log(this.tableData);
-    this.size = changes?.size?.currentValue
-      ? changes?.size?.currentValue
-      : this.size;
-    this.page = changes?.page?.currentValue
-      ? changes?.page?.currentValue
-      : this.page;
-    this.columns = changes?.columns?.currentValue
-      ? changes?.columns?.currentValue
-      : this.columns;
-    console.log(this.columns);
-    this.tableColumns = changes?.tableColumns?.currentValue
-      ? changes?.tableColumns?.currentValue
-      : this.tableColumns;
+  constructor(private tableService: TableService) {}
 
-    console.log(this.tableColumns);
+  ngAfterContentChecked(): void {
+    this.tableService.loading$.subscribe((loading) => {
+      this.isLoading[this.tableDataAttr.type] =
+        loading[this.tableDataAttr.type];
+    });
 
-    this.isLoading = changes?.isLoading?.currentValue;
+    this.tableService.tableData$.subscribe((response) => {
+      this.tableData[this.tableDataAttr.type] =
+        response[this.tableDataAttr.type].data;
+      this.page = response[this.tableDataAttr.type].page;
+      this.size = response[this.tableDataAttr.type].size;
+      this.total = response[this.tableDataAttr.type].total;
+    });
   }
 
   handlePageEvent(e: PageEvent) {

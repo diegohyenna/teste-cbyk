@@ -27,11 +27,7 @@
     label: 'Status da Entrega',
   }
   ]"
-  [tableData]="tableData"
-  [total]="total"
-  [page]="page"
-  [size]="size"
-  [isLoading]="isLoading"
+  [tableDataAttr]="{ type: 'deliveries' }"
   [filterInputs]="filterInputs"
   (onFilter)="onFilter($event)"
   (onPagination)="onPagination($event)"

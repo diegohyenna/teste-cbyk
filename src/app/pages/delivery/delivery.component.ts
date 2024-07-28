@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgModel } from '@angular/forms';
+import { transformAttributesInParams } from 'src/app/helpers/helpers';
 import { Delivery } from 'src/app/models/delivery.model';
 import { Filters } from 'src/app/models/filters.model';
 import { ApiService } from 'src/app/services/api.service';
@@ -17,7 +17,6 @@ export class DeliveryComponent implements OnInit {
   total = 0;
   page = 1;
   size = 10;
-  isLoading = false;
 
   filterInputs: FilterInputs[] = [
     {
@@ -42,11 +41,11 @@ export class DeliveryComponent implements OnInit {
   }
 
   getItems(page: number, size: number, filters?: Filters[]) {
+    this.tableService.setLoading({ type: 'deliveries' }, true);
     let filtersQueriesStringify = '';
-    this.isLoading = true;
 
     if (filters?.length) {
-      filtersQueriesStringify = this.transformAttributesInParams(filters);
+      filtersQueriesStringify = transformAttributesInParams(filters);
     } else {
       filtersQueriesStringify = '';
     }
@@ -55,13 +54,11 @@ export class DeliveryComponent implements OnInit {
       .getWithPaginationAndFilter(page, size, filtersQueriesStringify)
       .subscribe({
         next: (response) => {
-          this.tableData = response.data;
-          this.page = response.page;
-          this.size = response.size;
-          this.total = response.total;
-          this.isLoading = false;
+          this.tableService.setTableData({ type: 'deliveries' }, response);
+          this.tableService.setLoading({ type: 'deliveries' }, false);
         },
-        error: () => (this.isLoading = false),
+        error: () =>
+          this.tableService.setLoading({ type: 'deliveries' }, false),
       });
   }
 
@@ -71,12 +68,5 @@ export class DeliveryComponent implements OnInit {
 
   onFilter(e: any) {
     this.getItems(e.page, e.size, e.filters);
-  }
-
-  transformAttributesInParams(filters: Filters[]) {
-    return filters.reduce((acc, filter, index) => {
-      const prefix = index === 0 ? '?' : '&';
-      return `${acc}${prefix}${filter.attr}=${filter.value}`;
-    }, '');
   }
 }

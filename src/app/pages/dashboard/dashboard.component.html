@@ -13,11 +13,7 @@
       label: 'Total de entregas concluídas',
     }
   ]"
-      [isLoading]="driversSuccessful.isLoading"
-      [tableData]="driversSuccessful.data"
-      [total]="driversUnsuccessful.total"
-      [page]="driversSuccessful.page"
-      [size]="driversSuccessful.size"
+      [tableDataAttr]="{ type: 'driversSuccessful' }"
       [filterInputs]=""
       (onPagination)="onPaginationDeliverySuccessful($event)"
     ></app-table>
@@ -31,11 +27,7 @@
         { attr: 'driver', label: 'Motoristas' },
         { attr: 'total', label: 'Total de entregas não concluidas' }
       ]"
-      [isLoading]="driversUnsuccessful.isLoading"
-      [tableData]="driversUnsuccessful.data"
-      [total]="driversUnsuccessful.total"
-      [page]="driversUnsuccessful.page"
-      [size]="driversUnsuccessful.size"
+      [tableDataAttr]="{ type: 'driversUnsuccessful' }"
       [filterInputs]=""
       (onPagination)="onPaginationDeliveryUnsuccessful($event)"
     ></app-table>
@@ -59,12 +51,8 @@
         label: 'Total de entregas concluídas'
       }
     ]"
-    [isLoading]="neighborhood.isLoading"
-    [tableData]="neighborhood.data"
-    [total]="neighborhood.total"
-    [page]="neighborhood.page"
-    [size]="neighborhood.size"
+    [tableDataAttr]="{ type: 'neighborhood' }"
     [filterInputs]=""
-    (onPagination)="onPaginationDeliveryUnsuccessful($event)"
+    (onPagination)="onPaginationNeighborhoodl($event)"
   ></app-table>
 </div>

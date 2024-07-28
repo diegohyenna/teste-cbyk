@@ -15,14 +15,14 @@
     </button>
   </div>
 </div>
-<div class="container mat-elevation-z8" *ngIf="total > 0">
-  <div class="loading-shade" *ngIf="isLoading">
-    <mat-spinner *ngIf="isLoading"></mat-spinner>
+<div class="container mat-elevation-z8">
+  <div class="loading-shade" *ngIf="isLoading[this.tableDataAttr.type]">
+    <mat-spinner *ngIf="isLoading[this.tableDataAttr.type]"></mat-spinner>
   </div>
   <div class="table-container">
     <table
       mat-table
-      [dataSource]="tableData"
+      [dataSource]="tableData[this.tableDataAttr.type]"
       class="table"
       matSort
       matSortActive="created"
@@ -59,4 +59,3 @@
     (page)="handlePageEvent($event)"
   ></mat-paginator>
 </div>
-<p *ngIf="!total && !isLoading">Não contem registros!</p>
