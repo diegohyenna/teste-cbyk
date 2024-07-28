@@ -1,0 +1,38 @@
+<h1>Entregas</h1>
+<app-table
+  [columns]="[
+    'id',
+    'documento',
+    'motorista',
+    'cliente_origem',
+    'cliente_destino',
+    'status_entrega'
+  ]"
+  [tableColumns]="[
+  { attr: 'id', label: 'ID' },
+  { attr: 'documento', label: 'Documento' },
+  { attr: 'motorista', label: 'Motorista', subAttr: 'nome' },
+  {
+    attr: 'cliente_origem',
+    label: 'Cliente Origem',
+    subAttr: 'nome',
+  },
+  {
+    attr: 'cliente_destino',
+    label: 'Cliente Destino',
+    subAttr: 'nome',
+  },
+  {
+    attr: 'status_entrega',
+    label: 'Status da Entrega',
+  }
+  ]"
+  [tableData]="tableData"
+  [total]="total"
+  [page]="page"
+  [size]="size"
+  [isLoading]="isLoading"
+  [filterInputs]="filterInputs"
+  (onFilter)="onFilter($event)"
+  (onPagination)="onPagination($event)"
+></app-table>

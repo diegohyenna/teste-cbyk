@@ -1,0 +1,28 @@
+<mat-toolbar color="primary">
+  <button
+    mat-icon-button
+    aria-label="Example icon-button with menu icon"
+    [matMenuTriggerFor]="menu"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <button
+      mat-menu-item
+      [routerLink]="['/dashboard']"
+      routerLinkActive="link-active"
+    >
+      <mat-icon>dashboard</mat-icon> Dashboard
+    </button>
+    <button
+      mat-menu-item
+      class="primary"
+      [routerLink]="['/delivery']"
+      routerLinkActive="link-active"
+    >
+      <mat-icon>list_alt</mat-icon> Lista de entregas
+    </button>
+  </mat-menu>
+  <span>Teste CBYK</span>
+</mat-toolbar>

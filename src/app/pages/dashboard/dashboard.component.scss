@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+
+  .tables {
+    flex-grow: 1;
+  }
+
+  @media (max-width: 1100px) {
+    & {
+      flex-direction: column;
+    }
+  }
+}
