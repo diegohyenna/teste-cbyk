@@ -1,27 +1,42 @@
 # TesteCbyk
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.14.
+Esse projeto usa o [Angular CLI](https://github.com/angular/angular-cli) versão 16.2.14.
 
-## Development server
+## Tecnologias usadas
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Angular
+- Typescript
+- Angular Material
+- Jasmine
 
-## Code scaffolding
+## Features
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Roteamento
+- Lazy loading module
+- Web components
+- Gerenciamento de estados com RxJs
+- Diretivas Input e Output
+- Interfaces
+- Observer e Observable
 
-## Build
+## Rodando localmente
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Instale o nodejs
+- Instale o angular cli na versão 16.2.14
+- Na pasta raíz do projeto rode o comando `npm install`
+- Depois rode o comando `npm run start` e acesse a url [http://localhost:4200](http://localhost:4200) no navegador de sua preferência.
 
-## Running unit tests
+## Rodando testes unitários
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+É preciso ter o navegador Chrome instalado na máquina
 
-## Running end-to-end tests
+- Na pasta raiz do projeto rode o comando `npm run test`
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Estatisticas de Coverage
 
-## Further help
+- Na pasta raiz do projeto rode o comando `npm run test:coverage`
+- Após, navegue até a pasta `coverage/test-cbyk` e abra no navegador de sua escolha o arquivo `index.html`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Demonstração
+
+Visite a demonstração do projeto [aqui](https://teste-cbyk.vercel.app)
