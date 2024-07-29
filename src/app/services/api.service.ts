@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { concatMap, map, Observable, switchMap, concatAll, filter } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
+import { transformStringInArray } from '../helpers/helpers';
 import { IApi } from '../interfaces/IApi.interface';
 import { DeliveryReturn } from '../models/delivery-return.model';
 import { Delivery } from '../models/delivery.model';
-import { transformStringInArray } from '../helpers/helpers';
 
 @Injectable({
   providedIn: 'root',
@@ -233,7 +233,7 @@ export class ApiService implements IApi<DeliveryReturn> {
         typeof paramAttr == 'string' &&
         typeof paramValue == 'string'
       ) {
-        return paramValue.toLowerCase() == item[paramAttr].toLowerCase();
+        return paramValue?.toLowerCase() == item[paramAttr]?.toLowerCase();
       } else if (typeof (item[paramAttr.split('.')[0]] == 'object')) {
         if (
           typeof item[paramAttr.split('.')[0]][paramAttr.split('.')[1]] ==
@@ -242,7 +242,7 @@ export class ApiService implements IApi<DeliveryReturn> {
           return (
             item[paramAttr.split('.')[0]][
               paramAttr.split('.')[1]
-            ].toLowerCase() == paramValue.toLowerCase()
+            ]?.toLowerCase() == paramValue?.toLowerCase()
           );
         } else {
           return (

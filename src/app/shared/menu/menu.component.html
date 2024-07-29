@@ -1,7 +1,8 @@
 <mat-toolbar color="primary">
   <button
     mat-icon-button
-    aria-label="Example icon-button with menu icon"
+    class="menu"
+    aria-label="menu"
     [matMenuTriggerFor]="menu"
   >
     <mat-icon>menu</mat-icon>
@@ -10,6 +11,7 @@
   <mat-menu #menu="matMenu">
     <button
       mat-menu-item
+      class="menu-item"
       [routerLink]="['/dashboard']"
       routerLinkActive="link-active"
     >
@@ -17,7 +19,7 @@
     </button>
     <button
       mat-menu-item
-      class="primary"
+      class="menu-item"
       [routerLink]="['/delivery']"
       routerLinkActive="link-active"
     >

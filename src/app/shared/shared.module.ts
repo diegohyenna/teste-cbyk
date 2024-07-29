@@ -23,6 +23,7 @@ import { TableService } from './table/table.service';
   declarations: [MenuComponent, TableComponent, InputComponent],
   imports: [
     CommonModule,
+    RouterModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,

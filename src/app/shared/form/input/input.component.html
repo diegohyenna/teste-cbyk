@@ -7,7 +7,7 @@
       [formControl]="inputFormControl"
     />
   </mat-form-field>
-  <div *ngFor="let formError of formErrors">
+  <div class="error-messages" *ngFor="let formError of formErrors">
     <div class="danger" *ngIf="inputFormControl.hasError(formError.type)">
       {{ formError.message }}
     </div>

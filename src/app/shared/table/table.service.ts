@@ -57,10 +57,6 @@ export class TableService {
     this.tableDataSubject.value[stateAttr.type] = data;
   }
 
-  updateTableData(stateAttr: StateTableTypes, data: DeliveryReturn): void {
-    this.setTableData(stateAttr, data);
-  }
-
   setLoading(stateAttr: StateLoadingTypes, state: boolean): void {
     this.loadingSubject.value[stateAttr.type] = state;
   }

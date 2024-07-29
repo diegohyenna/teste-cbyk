@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DeliveryComponent } from './delivery/delivery.component';
-import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -20,7 +19,8 @@ const routes: Routes = [
   },
   {
     path: '**',
-    component: NotFoundComponent,
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
   },
 ];
 
