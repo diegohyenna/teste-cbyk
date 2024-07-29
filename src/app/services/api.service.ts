@@ -42,7 +42,6 @@ export class ApiService implements IApi<DeliveryReturn> {
             driver: string;
             totalDeliveries: number;
             totalDeliveriesSuccess: number;
-            id: string;
           }[] = [];
           let driversMap: { [key: string]: number } = {};
           deliveries
@@ -53,7 +52,6 @@ export class ApiService implements IApi<DeliveryReturn> {
               if (!(driver in driversMap)) {
                 driversMap[driver] = results.length;
                 results.push({
-                  id: delivery.id,
                   driver: delivery.motorista.nome,
                   totalDeliveries: 0,
                   totalDeliveriesSuccess: 0,
@@ -88,7 +86,6 @@ export class ApiService implements IApi<DeliveryReturn> {
           let results: {
             driver: string;
             total: number;
-            id: string;
           }[] = [];
           let driversMap: { [key: string]: number } = {};
           deliveries
@@ -99,7 +96,6 @@ export class ApiService implements IApi<DeliveryReturn> {
               if (!(driver in driversMap)) {
                 driversMap[driver] = results.length;
                 results.push({
-                  id: delivery.id,
                   driver: delivery.motorista.nome,
                   total: 0,
                 });
@@ -131,7 +127,6 @@ export class ApiService implements IApi<DeliveryReturn> {
             neighborhood: string;
             totalDeliveries: number;
             totalDeliveriesSuccess: number;
-            id: string;
           }[] = [];
           let neighborhoodMap: { [key: string]: number } = {};
           deliveries
@@ -144,7 +139,6 @@ export class ApiService implements IApi<DeliveryReturn> {
               if (!(neighborhood in neighborhoodMap)) {
                 neighborhoodMap[neighborhood] = results.length;
                 results.push({
-                  id: delivery.id,
                   neighborhood: delivery.cliente_destino.bairro,
                   totalDeliveries: 0,
                   totalDeliveriesSuccess: 0,

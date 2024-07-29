@@ -1,11 +1,11 @@
-import { TestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { ApiService } from './api.service';
-import { Delivery } from '../models/delivery.model';
+import { TestBed } from '@angular/core/testing';
+
 import { DeliveryReturn } from '../models/delivery-return.model';
+import { ApiService } from './api.service';
 
 describe('ApiService', () => {
   let service: ApiService;
@@ -86,13 +86,11 @@ describe('ApiService', () => {
     it('should return successful deliveries data', () => {
       const mockDeliveries: any[] = [
         {
-          id: '1',
           motorista: { nome: 'John' },
           status_entrega: 'ENTREGUE',
           cliente_destino: { bairro: 'Centro' },
         },
         {
-          id: '2',
           motorista: { nome: 'John' },
           status_entrega: 'ENTREGUE',
           cliente_destino: { bairro: 'Centro' },
@@ -116,13 +114,11 @@ describe('ApiService', () => {
     it('should return unsuccessful deliveries data', () => {
       const mockDeliveries: any[] = [
         {
-          id: '1',
           motorista: { nome: 'John' },
           status_entrega: 'INSUCESSO',
           cliente_destino: { bairro: 'Centro' },
         },
         {
-          id: '2',
           motorista: { nome: 'Jane' },
           status_entrega: 'INSUCESSO',
           cliente_destino: { bairro: 'Centro' },
@@ -146,13 +142,11 @@ describe('ApiService', () => {
     it('should return neighborhood data', () => {
       const mockDeliveries: any[] = [
         {
-          id: '1',
           motorista: { nome: 'John' },
           status_entrega: 'ENTREGUE',
           cliente_destino: { bairro: 'Centro' },
         },
         {
-          id: '2',
           motorista: { nome: 'Jane' },
           status_entrega: 'INSUCESSO',
           cliente_destino: { bairro: 'Centro' },

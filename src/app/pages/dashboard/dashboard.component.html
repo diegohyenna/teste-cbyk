@@ -3,16 +3,15 @@
   <div class="tables">
     <h3>Entregas Por Motoristas</h3>
     <app-table
-      [columns]="['id', 'driver', 'totalDeliveries', 'totalDeliveriesSuccess']"
+      [columns]="['driver', 'totalDeliveries', 'totalDeliveriesSuccess']"
       [tableColumns]="[
-  { attr: 'id', label: 'ID' },
-    { attr: 'driver', label: 'Motoristas' },
-    { attr: 'totalDeliveries', label: 'Total de entregas' },
-    {
-      attr: 'totalDeliveriesSuccess',
-      label: 'Total de entregas concluídas',
-    }
-  ]"
+        { attr: 'driver', label: 'Motoristas' },
+        { attr: 'totalDeliveries', label: 'Total de entregas' },
+        {
+          attr: 'totalDeliveriesSuccess',
+          label: 'Total de entregas concluídas',
+        }
+      ]"
       [tableDataAttr]="{ type: 'driversSuccessful' }"
       [filterInputs]=""
       (onPagination)="onPaginationDeliverySuccessful($event)"
@@ -21,9 +20,8 @@
   <div class="tables">
     <h3>Entregas Sem Sucesso</h3>
     <app-table
-      [columns]="['id', 'driver', 'total']"
+      [columns]="['driver', 'total']"
       [tableColumns]="[
-        { attr: 'id', label: 'ID' },
         { attr: 'driver', label: 'Motoristas' },
         { attr: 'total', label: 'Total de entregas não concluidas' }
       ]"
@@ -36,14 +34,8 @@
 <div>
   <h3>Entregas por bairro</h3>
   <app-table
-    [columns]="[
-      'id',
-      'neighborhood',
-      'totalDeliveries',
-      'totalDeliveriesSuccess'
-    ]"
+    [columns]="['neighborhood', 'totalDeliveries', 'totalDeliveriesSuccess']"
     [tableColumns]="[
-      { attr: 'id', label: 'ID' },
       { attr: 'neighborhood', label: 'Bairros' },
       { attr: 'totalDeliveries', label: 'Total de entregas' },
       {
